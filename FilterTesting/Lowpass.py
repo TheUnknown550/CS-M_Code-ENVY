@@ -13,7 +13,7 @@ def trim_wav( originalWavPath, start, end ):
     wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
  
  
-trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/normal/test/(2).wav", 0,10)
+trim_wav("noisyFile.wav", 0,10)
 #C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/test/(2).wav
 
 # Read in the audio file
@@ -23,7 +23,7 @@ frames, sample_rate = sf.read('File.wav')
 #frames = np.frombuffer(frames, dtype=np.int16)
 
 # Low-pass filter
-cutoff_freq = 250 # set cutoff frequency
+cutoff_freq = 200 # set cutoff frequency
 nyq_freq = 0.5 * sample_rate # Nyquist frequency
 Wn = cutoff_freq / nyq_freq # filter cutoff frequency
 b, a = signal.cheby1(4, 5, Wn, btype='low', analog=False)

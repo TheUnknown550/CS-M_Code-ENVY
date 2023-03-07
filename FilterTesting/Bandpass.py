@@ -20,7 +20,7 @@ frames, sample_rate = sf.read('File.wav')
 
 # Define filter parameters
 fmin = 50  # Lower cutoff frequency
-fmax = 250  # Upper cutoff frequency
+fmax = 200  # Upper cutoff frequency
 
 # Calculate the filter order
 nyquist_freq = 0.5 * sample_rate
