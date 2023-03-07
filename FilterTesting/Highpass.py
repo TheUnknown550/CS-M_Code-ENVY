@@ -24,7 +24,7 @@ frames, sample_rate = sf.read('File.wav')
 
 # High-pass filter
 # Define the filter parameters
-cutoff_freq = 50 # Hz
+cutoff_freq = 20 # Hz
 order = 4
 # Calculate the filter coefficients using a Butterworth filter
 nyquist_freq = 0.5 * sample_rate

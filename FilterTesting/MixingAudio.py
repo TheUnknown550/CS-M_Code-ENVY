@@ -3,6 +3,9 @@ import numpy as np
 import librosa
 from scipy.io import wavfile
 
+#Varibles
+dB = '50'
+
 # File Number
 for n in range(40):
 
@@ -14,14 +17,14 @@ for n in range(40):
         wavfile.write( name, sampleRate, waveData[startSample:endSample])
     
     # Trim and Load the audio file
-    trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/normal/test/("+str(n+1)+").wav", 0,10, 'File.wav')
+    trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/test/("+str(n+1)+").wav", 0,10, 'File.wav')
     data1, sample_rate1 = sf.read('File.wav')
     current_db1= 20 * np.log10(np.sqrt(np.mean(data1 ** 2)))
     print('dB1: ', current_db1)
 
 
     # Load the second audio file
-    trim_wav("WhiteNoise.wav", 0,10, 'Noise.wav')
+    trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/Noises/"+dB+"dB.wav", 0,10, 'Noise.wav')
     data2, sample_rate2 = sf.read('Noise.wav')
     current_db2 = 20 * np.log10(np.sqrt(np.mean(data2 ** 2)))
     print('dB2: ', current_db2)
@@ -48,12 +51,8 @@ for n in range(40):
     data1 = data1[:length]
     data2 = data2[:length]
 
-    # Normalize audio to target loudness
-    target_loudness = -80.0 # in dB
-    data2 = librosa.util.normalize(data2) * librosa.db_to_amplitude(target_loudness)
-
     # Mix the two audio signals
     mixed_data = (data1 + data2) / 2
 
     # Write the mixed audio to a new file
-    sf.write('C:/Users/Matt/Documents/Project/CS-M/Datasets/Testing/normal/WhiteNoise/('+str(n+1)+').wav', mixed_data, sample_rate1)
+    sf.write('C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/murmur/'+dB+'dB/('+str(n+1)+').wav', mixed_data, sample_rate1)

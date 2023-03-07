@@ -17,10 +17,10 @@ def trim_wav( originalWavPath, start, end ):
 trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/normal/test/(2).wav", 0,10)
 frames, sample_rate = sf.read('File.wav')
 
-
+# Band-pass Filter
 # Define filter parameters
-fmin = 50  # Lower cutoff frequency
-fmax = 200  # Upper cutoff frequency
+fmin = 20  # Lower cutoff frequency
+fmax = 250  # Upper cutoff frequency
 
 # Calculate the filter order
 nyquist_freq = 0.5 * sample_rate
