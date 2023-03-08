@@ -14,7 +14,7 @@ def trim_wav( originalWavPath, start, end ):
     wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
  
 # Trim and Load the audio file
-trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/normal/test/(2).wav", 0,10)
+trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/murmur/10dB/(2).wav", 0,10)
 frames, sample_rate = sf.read('File.wav')
 
 # Band-pass Filter
@@ -40,25 +40,17 @@ sf.write('Band-Pass_Filter.wav', filtered_frames, sample_rate)
 
 
 # Filter Effectiveness Tests
-# Calculate the SNR (High is good)
+# Calculate the Noise% (High is good)
 signal_power = np.sum(np.square(frames))
 noise_power = np.sum(np.square(frames - filtered_frames))
-SNR = 10 * np.log10(signal_power / noise_power)
-
+Noise = noise_power / signal_power * 100
+print('Noise%: ',Noise)
 # Calculate the MSE (low is good)
 MSE = np.mean(np.square(frames - filtered_frames))
-
-# Calculate the PSNR (High is Good)
-max_amp_value = np.finfo(frames.dtype).max
-PSNR = 10 * np.log10((max_amp_value ** 2) / MSE)
-
-# Output the value of SNR and MSE
-print("SNR: ", SNR)
-print("MSE: ", MSE)
-print("PSNR: ", PSNR)
+print('MSE: ',MSE)
 
 
-# Plot sound graphs
+'''# Plot sound graphs
 t = np.arange(0, len(frames)/sample_rate, 1/sample_rate)
 plt.figure(1)
 plt.title("Sound Comparison")
@@ -66,4 +58,4 @@ plt.xlabel("Time (s)")
 plt.ylabel("Amplitude")
 plt.plot(t, frames)
 plt.plot(t, filtered_frames)
-plt.show()
+plt.show()'''

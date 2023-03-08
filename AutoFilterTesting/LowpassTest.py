@@ -27,7 +27,7 @@ for n in range(len(SNR_col)):
             wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
 
         # Trim Audio File to 10 sec
-        if (n&2) == 0:
+        if (n%2) == 0:
             Type = 'normal'
         else:
             Type = 'murmur'
@@ -37,7 +37,7 @@ for n in range(len(SNR_col)):
         frames, sample_rate = sf.read('File.wav')
 
         # Low-pass filter
-        cutoff_freq = 250 # set cutoff frequency
+        cutoff_freq = 200 # set cutoff frequency
         nyq_freq = 0.5 * sample_rate # Nyquist frequency
         Wn = cutoff_freq / nyq_freq # filter cutoff frequency
         b, a = signal.cheby1(4, 5, Wn, btype='low', analog=False)
@@ -49,11 +49,11 @@ for n in range(len(SNR_col)):
 
 
         # Filter Effectiveness Tests
-        # Calculate the SNR (High is good)
+        # Calculate the Noise% (High is good)
         signal_power = np.sum(np.square(frames))
         noise_power = np.sum(np.square(frames - filtered_frames))
-        SNR = 10 * np.log10(signal_power / noise_power)
-        print('SNR: ',SNR)
+        Noise = noise_power / signal_power * 100
+        print('Noise%: ',Noise)
 
         # Calculate the MSE (low is good)
         MSE = np.mean(np.square(frames - filtered_frames))
@@ -61,8 +61,8 @@ for n in range(len(SNR_col)):
 
 
         # Upload to Excel
-        print(n+1)
-        ws[SNR_col[n]+str(row + i)] = SNR
+        print('Low: ',n+1)
+        ws[SNR_col[n]+str(row + i)] = Noise
         ws[MSE_col[n]+str(row + i)] = MSE
 
         wb.save(ExcelFile)

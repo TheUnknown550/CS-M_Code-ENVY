@@ -11,9 +11,9 @@ def trim_wav( originalWavPath, start, end ):
     startSample = int( start * sampleRate )
     endSample = int( end * sampleRate )
     wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
- 
- 
-trim_wav("noisyFile.wav", 0,10)
+
+# Load Audio File
+trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/normal/0dB/(1).wav", 0,10)
 #C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/test/(2).wav
 
 # Read in the audio file

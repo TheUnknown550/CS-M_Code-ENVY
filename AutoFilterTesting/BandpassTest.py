@@ -59,11 +59,11 @@ for n in range(len(SNR_col)):
 
 
         # Filter Effectiveness Tests
-        # Calculate the SNR (High is good)
+        # Calculate the Noise% (High is good)
         signal_power = np.sum(np.square(frames))
         noise_power = np.sum(np.square(frames - filtered_frames))
-        SNR = 10 * np.log10(signal_power / noise_power)
-        print('SNR: ',SNR)
+        Noise = noise_power / signal_power * 100
+        print('Noise%: ',Noise)
 
         # Calculate the MSE (low is good)
         MSE = np.mean(np.square(frames - filtered_frames))
@@ -72,7 +72,7 @@ for n in range(len(SNR_col)):
 
         # Upload to Excel
         print(n+1)
-        ws[SNR_col[n]+str(row + i)] = SNR
+        ws[SNR_col[n]+str(row + i)] = Noise
         ws[MSE_col[n]+str(row + i)] = MSE
 
         wb.save(ExcelFile)
