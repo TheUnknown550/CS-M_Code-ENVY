@@ -13,7 +13,7 @@ def trim_wav( originalWavPath, start, end ):
     wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
 
 # Load Audio File
-trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/normal/0dB/(1).wav", 0,10)
+trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/normal/test/(1).wav", 0,10)
 #C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/test/(2).wav
 
 # Read in the audio file

@@ -12,10 +12,10 @@ MSE_col = ['C','E','H','J','M','O','R','T','W','Y','AB','AD']
 row = 4
 ExcelFile = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/FilterTestResults.xlsx'
 
-# Upload to Excel
+'''# Upload to Excel
 wb = px.load_workbook(ExcelFile)
 wsbook = wb.active
-ws = wb[Sheet]
+ws = wb[Sheet]'''
 
 for n in range(len(SNR_col)):
     for i in range(40):
@@ -31,7 +31,7 @@ for n in range(len(SNR_col)):
             Type = 'normal'
         else:
             Type = 'murmur'
-        trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/"+Type+"/"+str(dB[n])+"dB/("+str(i+1)+").wav", 0,10)
+        trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/test/("+str(i+1)+").wav", 0,10)
 
         # Read in the audio file
         frames, sample_rate = sf.read('File.wav')
@@ -45,7 +45,7 @@ for n in range(len(SNR_col)):
 
 
         # Export new WAV file
-        sf.write('Low-Pass_Filter.wav', filtered_frames, sample_rate)
+        sf.write('C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/Lowpass/('+str(i+1)+').wav', filtered_frames, sample_rate)
 
 
         # Filter Effectiveness Tests
@@ -60,9 +60,9 @@ for n in range(len(SNR_col)):
         print('MSE: ',MSE)
 
 
-        # Upload to Excel
+'''        # Upload to Excel
         print('Low: ',n+1)
         ws[SNR_col[n]+str(row + i)] = Noise
         ws[MSE_col[n]+str(row + i)] = MSE
 
-        wb.save(ExcelFile)
+        wb.save(ExcelFile)'''
