@@ -2,7 +2,7 @@ import librosa
 import matplotlib.pyplot as plt
 
 # Load the audio file
-filename = 'C:/Users/Matt/Documents/Project/CS-M/Datasets/normal/test/(1).wav'
+filename = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/AmpLowTests/normal/AmpToLow/LowAudio/(1).wav'
 y, sr = librosa.load(filename)
 
 # Compute the Fourier transform of the audio signal

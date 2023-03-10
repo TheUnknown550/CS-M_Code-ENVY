@@ -9,10 +9,10 @@ def trim_wav( originalWavPath, start, end ):
     endSample = int( end * sampleRate )
     wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
 
-for i in range(1,496):
-    print(i)
+for i in range(262,1000):
+    print(i+1)
     # Load the audio file
-    filename = 'C:/Users/Matt/Documents/Project/CS-M/Datasets/Normal/Lowpass/('+str(i)+').wav'
+    filename = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/AmpLowTests/murmur/LowToAmp/AmpAudio2/('+str(i+1)+').wav'
     trim_wav(filename,0,10)
     y, sr = librosa.load('File.wav')
 
@@ -27,5 +27,5 @@ for i in range(1,496):
     librosa.display.specshow(mag, sr=sr, x_axis='time', y_axis='log')
     plt.colorbar(format='%+2.0f dB')
     plt.title('Spectrogram')
-    plt.savefig('C:/Users/Matt/Documents/Project/CS-M/Datasets/Normal/TestSpectrogram/('+str(i)+').png')
+    plt.savefig('C:/Users/Matt/Documents/Project/CS-M/Experiments/AmpLowTests/murmur/LowToAmp/Spectrogram/('+str(i)+').png')
 

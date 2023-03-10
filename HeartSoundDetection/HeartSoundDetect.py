@@ -19,7 +19,8 @@ def trim_wav( originalWavPath, start, end ):
     wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
     print('Trimmed File Complete')
 
-filename = 'C:/Users/Matt/Documents/Project/CS-M/Datasets/Datasets/murmur/LowPass/(1).wav'
+#Load Audio
+filename = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/AmpLowTests/normal/AmpToLow/LowAudio/(1).wav'
 trim_wav(filename,0,10)
 
 # BPM Counter
@@ -46,6 +47,7 @@ print('BPM: ',BPM)
 
 # Find peaks
 height = np.mean(he)
+
 peaks, _ = find_peaks(he, height=height)
 print(peaks)
 print(he[peaks])
@@ -68,8 +70,8 @@ for i in range(len(peaks)):
             S1.append(peaks[i])
             S2.append(peaks[i+1])
         elif peaks[i-1] == S1[len(S1)-1]:
-            S1.append(peaks[i])
-            S2.append(peaks[i+1])
+            S2.append(peaks[i])
+            S1.append(peaks[i+1])
         
 
 
@@ -77,6 +79,10 @@ for i in range(len(peaks)):
 plt.title('Sound Graph')
 plt.xlabel('Time')
 plt.ylabel('Amplitude')
+bbox_props = dict(boxstyle="round", fc="white", ec="black", lw=0.5, alpha=0.5)
+plt.text(0.95, 0.95, f'BPM: {BPM:.2f}', transform=plt.gca().transAxes,
+         fontsize=14, verticalalignment='top', horizontalalignment='right',
+         bbox=bbox_props)
 plt.plot(y, label='Sound')
 plt.plot(he, linewidth=2, label='Adaptive Threasholding')
 plt.plot(S1, he[S1],'ro', label='S1', color='g')

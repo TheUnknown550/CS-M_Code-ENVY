@@ -2,8 +2,8 @@ import librosa
 import matplotlib.pyplot as plt
 
 # Load the audio file
-filename1 = 'Band-Pass_Filter.wav'
-filename2 = "File.wav"
+filename1 = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/AmpLowTests/normal/AmpToLow/LowAudio/(1).wav'
+filename2 = "C:/Users/Matt/Documents/Project/CS-M/Experiments/AmpLowTests/normal/AmpToLow/AmpAudio/(1).wav"
 y1, sr1 = librosa.load(filename1)
 y2, sr2 = librosa.load(filename2)
 
