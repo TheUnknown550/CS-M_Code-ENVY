@@ -8,7 +8,7 @@ y, sr = librosa.load(filename)
 # Compute the Fourier transform of the audio signal
 fft = librosa.stft(y)
 
-# Convert the complex Fourier coefficients to magnitudes
+# Convert the complex Fourier coefficients to magnitudes 
 mag = librosa.amplitude_to_db(abs(fft))
 
 # Plot the filtered spectrum
