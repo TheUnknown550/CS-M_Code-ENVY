@@ -6,16 +6,21 @@ from scipy.io import wavfile
 import soundfile as sf
 from scipy.signal import firwin, filtfilt
 
-# Trim the Audio
-def trim_wav( originalWavPath, start, end ):
+# Trim Audio
+def trim_wav( originalWavPath, start, end, Name ):
     sampleRate, waveData = wavfile.read( originalWavPath )
     startSample = int( start * sampleRate )
     endSample = int( end * sampleRate )
-    wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
- 
-# Trim and Load the audio file
-trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/murmur/10dB/(2).wav", 0,10)
+    wavfile.write(Name, sampleRate, waveData[startSample:endSample])
+
+# Load the two audio files as NumPy arrays
+File = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/normal/0dB/(1).wav'
+trim_wav(File,0,10,'File.wav')
 frames, sample_rate = sf.read('File.wav')
+
+TestFile = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/Control/normal/(1).wav'
+trim_wav(TestFile,0,10,'Test.wav')
+Test, fs2 = sf.read('Test.wav')
 
 # Band-pass Filter
 # Define filter parameters
@@ -36,18 +41,20 @@ filtered_frames = filtfilt(b, [1], frames)
 
 
 # Export new WAV file
-sf.write('Band-Pass_Filter.wav', filtered_frames, sample_rate)
+sf.write('BandPass.wav', filtered_frames, sample_rate)
 
 
 # Filter Effectiveness Tests
-# Calculate the Noise% (High is good)
-signal_power = np.sum(np.square(frames))
-noise_power = np.sum(np.square(frames - filtered_frames))
-Noise = noise_power / signal_power * 100
-print('Noise%: ',Noise)
-# Calculate the MSE (low is good)
-MSE = np.mean(np.square(frames - filtered_frames))
-print('MSE: ',MSE)
+# Trim the ANC array to match the length of the Test array
+filtered_frames = filtered_frames[:len(Test)]
+
+signal_power = np.sum(Test**2)
+noise_power = np.sum((filtered_frames)**2)
+snr = 10 * np.log10(signal_power / noise_power)
+print("SNR: {:.2f} dB".format(snr))
+rmse = np.sqrt(np.mean((Test - filtered_frames)**2))
+print("RMSE: {:.2f}".format(rmse))
+
 
 
 '''# Plot sound graphs

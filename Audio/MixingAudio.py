@@ -3,9 +3,6 @@ import numpy as np
 import librosa
 from scipy.io import wavfile
 
-#Varibles
-dB = '50'
-
 # File Number
 for n in range(40):
 
@@ -17,14 +14,14 @@ for n in range(40):
         wavfile.write( name, sampleRate, waveData[startSample:endSample])
     
     # Trim and Load the audio file
-    trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/test/("+str(n+1)+").wav", 0,10, 'File.wav')
+    trim_wav(f"C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests2/Control/normal/({n+1}).wav", 0,10, 'File.wav')
     data1, sample_rate1 = sf.read('File.wav')
     current_db1= 20 * np.log10(np.sqrt(np.mean(data1 ** 2)))
     print('dB1: ', current_db1)
 
 
     # Load the second audio file
-    trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/Noises/"+dB+"dB.wav", 0,10, 'Noise.wav')
+    trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests2/Noise/Water.wav", 0,10, 'Noise.wav')
     data2, sample_rate2 = sf.read('Noise.wav')
     current_db2 = 20 * np.log10(np.sqrt(np.mean(data2 ** 2)))
     print('dB2: ', current_db2)
@@ -52,7 +49,9 @@ for n in range(40):
     data2 = data2[:length]
 
     # Mix the two audio signals
-    mixed_data = (data1 + data2) / 2
+    mixed_data = (data1 + data2)
+    # Normalize the mixed signal
+    #mixed_data_normalized = mixed_data / np.max(np.abs(mixed_data))
 
     # Write the mixed audio to a new file
-    sf.write('C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/murmur/'+dB+'dB/('+str(n+1)+').wav', mixed_data, sample_rate1)
+    sf.write('C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests2/Mixed/Water/('+str(n+1)+').wav', mixed_data, sample_rate1)

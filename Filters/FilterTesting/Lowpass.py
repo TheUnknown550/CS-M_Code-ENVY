@@ -5,19 +5,21 @@ import matplotlib.pyplot as plt
 from scipy.io import wavfile
 import soundfile as sf
 
-# Trim the Audio
-def trim_wav( originalWavPath, start, end ):
+# Trim Audio
+def trim_wav( originalWavPath, start, end, Name ):
     sampleRate, waveData = wavfile.read( originalWavPath )
     startSample = int( start * sampleRate )
     endSample = int( end * sampleRate )
-    wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
+    wavfile.write(Name, sampleRate, waveData[startSample:endSample])
 
-# Load Audio File
-trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/normal/test/(1).wav", 0,10)
-#C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/test/(2).wav
-
-# Read in the audio file
+# Load the two audio files as NumPy arrays
+File = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/Control/normal/(1).wav'
+trim_wav(File,0,10,'File.wav')
 frames, sample_rate = sf.read('File.wav')
+
+TestFile = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/Control/normal/(1).wav'
+trim_wav(TestFile,0,10,'Test.wav')
+Test, fs2 = sf.read('Test.wav')
 
 # Convert the frames to a numpy array
 #frames = np.frombuffer(frames, dtype=np.int16)
@@ -31,26 +33,17 @@ filtered_frames = signal.filtfilt(b, a, frames)
 
 
 # Export new WAV file
-sf.write('Low-Pass_Filter.wav', filtered_frames, sample_rate)
+sf.write('File.wav', filtered_frames, sample_rate)
 
 
 # Filter Effectiveness Tests
-# Calculate the SNR (High is good)
-signal_power = np.sum(np.square(frames))
-noise_power = np.sum(np.square(frames - filtered_frames))
-SNR = 10 * np.log10(signal_power / noise_power)
-
-# Calculate the MSE (low is good)
-MSE = np.mean(np.square(frames - filtered_frames))
-
-# Calculate the PSNR (High is Good)
-max_amp_value = np.finfo(frames.dtype).max
-PSNR = 10 * np.log10((max_amp_value ** 2) / MSE)
-
-# Output the value of SNR and MSE
-print("SNR: ", SNR)
-print("MSE: ", MSE)
-print("PSNR: ", PSNR)
+# Calculate the SNR and RMSE values
+signal_power = np.sum(Test**2)
+noise_power = np.sum((filtered_frames)**2)
+snr = 10 * np.log10(signal_power / noise_power)
+print("SNR: {:.2f} dB".format(snr))
+rmse = np.sqrt(np.mean((Test - filtered_frames)**2))
+print("RMSE: {:.2f}".format(rmse))
 
 
 # Plot sound graphs

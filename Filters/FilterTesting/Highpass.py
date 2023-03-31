@@ -13,7 +13,7 @@ def trim_wav( originalWavPath, start, end ):
     wavfile.write( 'File.wav', sampleRate, waveData[startSample:endSample])
  
  
-trim_wav("C:/Users/Matt/Documents/Project/CS-M/Datasets/normal/test/(2).wav", 0,10)
+trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests/normal/20dB/(1).wav", 0,10)
 #C:/Users/Matt/Documents/Project/CS-M/Datasets/murmur/test/(2).wav
 
 # Read in the audio file
@@ -36,7 +36,7 @@ filtered_frames = signal.filtfilt(b, a, frames)
 
 
 # Export new WAV file
-sf.write('High-Pass_Filter.wav', filtered_frames, sample_rate)
+sf.write('File.wav', filtered_frames, sample_rate)
 
 
 # Filter Effectiveness Tests
