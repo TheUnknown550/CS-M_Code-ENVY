@@ -7,7 +7,7 @@ from scipy.signal import firwin, filtfilt
 from pydub import AudioSegment
 import time
 
-for n in range(6):
+for n in range(13):
     for i in range(40):
         # Trim the Audio
         def trim_wav( originalWavPath, start, end, name ):
@@ -17,14 +17,14 @@ for n in range(6):
             wavfile.write( name, sampleRate, waveData[startSample:endSample])
 
         # Trim Audio File to 10 sec
-        if n < 3:
+        if n < 7:
             trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Heart/normal/("+str(i+1)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Original.wav')
             trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noise/("+str(n+1)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise.wav')
-            Output = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/Sound('+str(n+1)+')/normal/('+str(i+1)+').wav'
+            Output = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/'+str(n+1)+'00Hz/normal/('+str(i+1)+').wav'
         else:
             trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Heart/murmur/("+str(i+1)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Original.wav')
-            trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noise/("+str(n-2)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise.wav')
-            Output = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/Sound('+str(n-2)+')/murmur/('+str(i+1)+').wav'
+            trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noise/("+str(n-6)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise.wav')
+            Output = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/'+str(n-6)+'00Hz/murmur/('+str(i+1)+').wav'
         
         # Read the first audio file
         sound1 = AudioSegment.from_file('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Original.wav')

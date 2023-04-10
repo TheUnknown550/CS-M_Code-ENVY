@@ -13,8 +13,8 @@ import math
 #Varibles
 Sheet = 'Noisereduce'
 dB = [0,0,10,10,20,20,30,30,40,40,50,50]
-SNR_col = ['B','E','H','K','N','Q','S','V','X','AA','AC','AF','AI','AL','AO','AR','AU','AX','BA','BD','BG','BJ','BM','BP','BS','BV','BY','CB','CE','CH','CK','CN','CQ','CT','CW','CZ']
-MSE_col = ['C','F','I','L','O','R','T','W','Y','AB','AD','AG','AJ','AM','AP','AS','AV','AY','BB','BE','BH','BK','BN','BQ','BT','BW','BZ','CC','CF','CI','CL','CO','CR','CU','CX','DA']
+SNR_col = ['B','E','H','K','N','Q','T','W','Z','AC','AF','AI','AL','AO','AR','AU','AX','BA','BD','BG','BJ','BM','BP','BS','BV','BY','CB','CE','CH','CK','CN','CQ','CT','CW','CZ']
+MSE_col = ['C','F','I','L','O','R','U','X','AA','AD','AG','AJ','AM','AP','AS','AV','AY','BB','BE','BH','BK','BN','BQ','BT','BW','BZ','CC','CF','CI','CL','CO','CR','CU','CX','DA']
 row = 4
 ExcelFile = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/Results.xlsx'
 
@@ -23,7 +23,7 @@ wb = px.load_workbook(ExcelFile)
 wsbook = wb.active
 ws = wb[Sheet]
 
-for n in range(6):
+for n in range(14):
     for i in range(40):
         # Trim the Audio
         def trim_wav( originalWavPath, start, end, name ):
@@ -33,16 +33,16 @@ for n in range(6):
             wavfile.write( name, sampleRate, waveData[startSample:endSample])
 
         # Trim Audio File to 10 sec
-        if n < 3:
+        if n < 7:
             trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Heart/normal/("+str(i+1)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Original.wav')
-            trim_wav('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/Sound('+str(n+1)+')/normal/('+str(i+1)+').wav', 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/MixedFile.wav')
+            trim_wav('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/'+str(n+1)+'00Hz/normal/('+str(i+1)+').wav', 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/MixedFile.wav')
             trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noise/("+str(n+1)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise.wav')
             Output = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noisereduce/normal/('+str(n+1)+'-'+str(i+1)+').wav'
         else:
             trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Heart/murmur/("+str(i+1)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Original.wav')
-            trim_wav('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/Sound('+str(n-2)+')/murmur/('+str(i+1)+').wav', 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/MixedFile.wav')
-            trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noise/("+str(n-2)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise.wav')
-            Output = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noisereduce/murmur/('+str(n-2)+'-'+str(i+1)+').wav'
+            trim_wav('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/'+str(n-6)+'00Hz/murmur/('+str(i+1)+').wav', 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/MixedFile.wav')
+            trim_wav("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noise/("+str(n-6)+").wav", 0,10, 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise.wav')
+            Output = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noisereduce/murmur/('+str(n-6)+'-'+str(i+1)+').wav'
         
         # Read in the audio file
         Original, sample_rate = sf.read('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Original.wav')
@@ -63,7 +63,7 @@ for n in range(6):
         
         # Calculate SNR
         signal_power = np.mean(np.square(Original))
-        noise_power = np.mean(np.square(Original - filtered_frames))
+        noise_power = np.mean(np.square(filtered_frames - Original))
         if noise_power == 0:
             SNR = float('inf')  # infinite SNR for zero noise power
         else:

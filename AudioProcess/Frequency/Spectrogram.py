@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.io import wavfile
 
 
-y, sr = librosa.load('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noisereduce/normal/(1-2).wav')
+y, sr = librosa.load("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/BandPass/normal/(7-1).wav")
 
 # Compute the Fourier transform of the audio signal
 fft = librosa.stft(y)

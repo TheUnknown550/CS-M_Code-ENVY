@@ -2,8 +2,8 @@ import librosa
 import matplotlib.pyplot as plt
 
 # Load the audio file
-filename1 = 'C:/Users/Matt/Documents/Project/CS-M/CS-M_Code-ENVY/Filters/FilterTesting/ANC.wav'
-filename2 = "C:/Users/Matt/Documents/Project/CS-M/CS-M_Code-ENVY/Filters/FilterTesting/Test.wav"
+filename1 = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Noisereduce/normal/(1-1).wav'
+filename2 = "C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Heart/normal/(1).wav"
 y1, sr1 = librosa.load(filename1)
 y2, sr2 = librosa.load(filename2)
 

@@ -1,40 +1,35 @@
-import soundfile as sf
-import numpy as np
 import tensorflow as tf
+import librosa
+import numpy as np
 
-# Load the saved model
-model = tf.keras.models.load_model('ANC.h5')
+# Load the mixed sound (Sound1) and the new noise sound (NewNoise)
+mixed_sound, sr = librosa.load('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/MixedSounds/Sound(1)/normal/(1).wav', sr=16000)
+new_noise_sound, sr = librosa.load('NewNoise.wav', sr=16000)
 
-file_path = 'MixedAudio.wav'
-noise_path = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/Datasets/Noise/(2).wav'
+# Extract features from the mixed sound
+mixed_sound_stft = librosa.stft(mixed_sound, n_fft=1024, hop_length=512)
+mixed_sound_mag = np.abs(mixed_sound_stft)
+mixed_sound_phase = np.angle(mixed_sound_stft)
 
-# Load the recorded audio and noise audio files for testing
-recorded_audio, sr_recorded = sf.read(file_path, dtype='float32')
-noise_audio, sr_noise = sf.read(noise_path, dtype='float32')
+# Extract features from the new noise sound
+new_noise_sound_stft = librosa.stft(new_noise_sound, n_fft=1024, hop_length=512)
+new_noise_sound_mag = np.abs(new_noise_sound_stft)
 
-# Pad the signals with zeros to make them equal length to the clean signal
-max_len = max(len(recorded_audio), len(noise_audio))
-recorded_audio = np.pad(recorded_audio, (0, max_len - len(recorded_audio)), 'constant')
-noise_audio = np.pad(noise_audio, (0, max_len - len(noise_audio)), 'constant')
+# Load the existing RNN model
+model = tf.keras.models.load_model('rnn_model.h5')
 
-# Define the window size and step size for testing data
-window_size = 16000 # 1 second
-step_size = 8000 # 0.5 seconds
+# Apply the active noise cancelling to the mixed sound
+mixed_sound_stft = mixed_sound_stft.reshape(1, mixed_sound_stft.shape[0], mixed_sound_stft.shape[1])
+mixed_sound_mag = np.abs(mixed_sound_stft)
+predicted_noise_sound_mag = model.predict(mixed_sound_mag)
+predicted_noise_sound_mag = predicted_noise_sound_mag.reshape(predicted_noise_sound_mag.shape[1], predicted_noise_sound_mag.shape[2])
+predicted_noise_sound_stft = predicted_noise_sound_mag * np.exp(1j * mixed_sound_phase)
 
-# Split the signals into windows of 1 second each
-X_test_windows = []
-for i in range(0, len(recorded_audio) - window_size, step_size):
-    window = np.stack((recorded_audio[i:i + window_size], noise_audio[i:i + window_size]), axis=-1)
-    X_test_windows.append(window)
-X_test_windows = np.array(X_test_windows)
+# Subtract the estimated noise from the mixed sound
+cleaned_sound_stft = mixed_sound_stft - predicted_noise_sound_stft
 
-# Use the model to clean up the recorded audio
-y_pred_windows = model.predict(X_test_windows)
-y_pred_windows = np.squeeze(y_pred_windows, axis=-1)
+# Reconstruct the cleaned audio
+cleaned_sound = librosa.istft(cleaned_sound_stft, hop_length=512)
 
-# Remove any padding added earlier
-y_pred = np.reshape(y_pred_windows, (-1,))
-y_pred = y_pred[:len(recorded_audio)]
-
-# Save the cleaned audio using soundfile
-sf.write('CleanedFile.wav', y_pred, sr_recorded)
+# Save the cleaned audio
+librosa.output.write_wav('cleaned_sound.wav', cleaned_sound, sr)
