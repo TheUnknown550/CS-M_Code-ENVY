@@ -1,8 +1,8 @@
 from pydub import AudioSegment
 
 # Set the file paths for the two audio files
-original_file_path = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/Datasets/Original/All/(1).wav'
-noise_file_path = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/Datasets/Noise/(1).wav'
+original_file_path = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/ControlledVaribles/Heart/normal/(1).wav'
+noise_file_path = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise_clip_5.wav'
 
 # Load the audio files using PyDub
 original_audio = AudioSegment.from_wav(original_file_path)

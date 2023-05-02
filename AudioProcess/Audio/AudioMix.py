@@ -8,9 +8,9 @@ from pydub import AudioSegment
 sound1 = AudioSegment.from_file('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/Datasets/Original/All/(1).wav')
 
 # Read the second audio file
-sound2 = AudioSegment.from_file('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/Datasets/Noise/(1).wav')
+sound2 = AudioSegment.from_file('C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise_Clip_2.wav')
 
 
 combined = sound1.overlay(sound2)
 
-combined.export("MixedSound.wav", format='wav')
+combined.export("C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/MixedSound.wav", format='wav')

@@ -3,13 +3,13 @@ import math
 import os
 
 # prompt the user to enter the directory path
-input_directory_path = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/FilterTests2/Noise'
-output_directory_path = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/Datasets/Noise'
+input_directory_path = "C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios/Noise"
+output_directory_path = 'C:/Users/Matt/Documents/Project/CS-M/Experiments/NoiseCancelTests/TestingAudios'
 
 # define the length of each clip in seconds
 clip_length = 10
 
-# get a list of all audio files in the input directory
+# get a list of all audio files in the input directory  
 audio_files = [f for f in os.listdir(input_directory_path) if f.endswith(".wav")]
 
 # process each audio file
